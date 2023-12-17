@@ -1,0 +1,23 @@
+#Histograma
+hist(ECC_Time, col=rgb(1,0,0,0.5), main="Histogram of RSA Time and ECC Time", xlab="Time (ms)", ylab="Frequency", xlim=c(0, max(c(ECC_Time, RSA_Time))))
+hist(RSA_Time, col=rgb(0,0,1,0.5), add=TRUE)
+legend("topright", legend=c("ECC_Time", "RSA_Time"), fill=c(rgb(1,0,0,0.5), rgb(0,0,1,0.5)))
+
+#Q-Q Plot for each variable
+qqnorm(ECC_Time, main="Q-Q Plot for ECC Time", col="red")
+qqline(ECC_Time, col="red")
+qqnorm(RSA_Time, main="Q-Q Plot for RSA Time", col="blue")
+qqline(RSA_Time, col="blue")
+
+
+#Q-qplot for differences
+qqnorm(ECC_Time - RSA_Time, main="Q-Q Plot for Differences between RSA_Time and ECC_Time")
+qqline(ECC_Time - RSA_Time)
+
+
+#BoxPlot
+boxplot(ECC_Time, RSA_Time, names=c("ECC_Time", "RSA_Time"), main="Boxplot comparison of RSA and ECC encryption times.", ylab="Time (ms)", col=c("red", "blue"))
+
+#ttest
+t.test(ECC_Time, RSA_Time, paired=TRUE)
+
