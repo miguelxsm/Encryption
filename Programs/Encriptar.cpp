@@ -22,7 +22,7 @@ string EncryptRSA(const string& plain, const RSA::PublicKey& publicKey) {
 }
 
 
-string EncryptAES(const string& plain, const SecByteBlock& key, const SecByteBlock& iv) {
+string EncryptECC(const string& plain, const SecByteBlock& key, const SecByteBlock& iv) {
     string cipher;
     try {
         CBC_Mode<AES>::Encryption encryption;
@@ -87,7 +87,7 @@ int main() {
    resultRSA = "";
     auto startRSA = chrono::high_resolution_clock::now();
     while (getline(inputFile, inputLine)) {
-        encryptedText = EncryptAES(inputLine, aesKey, iv);
+        encryptedText = EncryptRSA(inputLine, rsaPublicKey);
         resultRSA += encryptedText + "\n";
     }
     auto endRSA = chrono::high_resolution_clock::now();
@@ -97,7 +97,7 @@ int main() {
 
     // Verificar si el archivo se abrió correctamente después de volver a abrirlo
     if (!inputFile.is_open()) {
-        cerr << "No se pudo volver a abrir el archivo de entrada para ElGamal." << endl;
+        cerr << "No se pudo volver a abrir el archivo de entrada para ECC." << endl;
         return 1;
     }
     // ElGamal Encryption
@@ -106,7 +106,7 @@ int main() {
     encryptedText = "";
     auto startECC = chrono::high_resolution_clock::now();
     while (getline(inputFile, inputLine)) {
-        encryptedText = EncryptAES(inputLine, aesKey, iv);
+        encryptedText = EncryptECC(inputLine, aesKey, iv);
         result2 += encryptedText + "\n";
     }
     auto endECC = chrono::high_resolution_clock::now();
